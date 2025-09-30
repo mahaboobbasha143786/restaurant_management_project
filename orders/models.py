@@ -10,3 +10,12 @@ class Order(models.Model):
     status = models.ForegnKey(OrdeStatus, on_delete=models,SET_NULL, null=True,related_name='orders')
     def __str__(self):
         return f"Order {self.id} - {self.customer_name}"
+
+class OrderItem(models.Model):
+    order = models.ForegnKey(Order,on_delete=models.CASCADE, related_name="items")
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digit=8,decimal_places=2)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.name} (x{self.quantity})"
