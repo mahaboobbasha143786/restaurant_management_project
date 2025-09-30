@@ -24,3 +24,14 @@ class ItemView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+def menu_items_by_category(request):
+    category_name = request.query_params.get('category', None)
+    if category_name:
+        items = Items.objects.filter(category__name__iexact=category_name, ist_available=True)
+    
+    else:
+        items = Item.objects.all()
+    serializer = ItemSerializer(items, many=True)
+    return Response(serializer.data)
