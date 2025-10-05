@@ -29,3 +29,27 @@ class Coupon(models.Model):
 
     def __str__(self):
         return f"{self.code} - {self.discount_percentage}%"
+
+class ActiveOrderManager(models.Model):
+    def get_active_orders(self):
+        return self.filter(status_in=['pending', 'processing'])
+
+class Order(models.Model):
+    STATUS_CHOICES =[
+        ('pending', 'pending'),
+        ('processing', 'processing'),
+        ('completed', 'completed'),
+        ('cancelled', 'canelled')
+
+    ]
+
+    customer_name = models.CharField(max_lenght=100)
+    total_amount = models.DecimalField(max_digit=10, decimal_places=2)
+    status = models.CharField(max_lenght=20, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    objects = ActiveOrderManager()
+
+    def __str__(self):
+        return f"Order #{self.id} - {self.customer_name} ({self.status})"
+        
