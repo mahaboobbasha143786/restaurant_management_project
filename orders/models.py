@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
+from home.models import Product
 
 from .models import OrderStatus
 
@@ -31,8 +33,8 @@ class Coupon(models.Model):
         return f"{self.code} - {self.discount_percentage}%"
 
 class ActiveOrderManager(models.Model):
-    def get_active_orders(self):
-        return self.filter(status_in=['pending', 'processing'])
+    def get_queryset(self):
+        return super().get_queryset().exclude(status='cancelled')
 
 class Order(models.Model):
     STATUS_CHOICES =[
@@ -52,4 +54,4 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order #{self.id} - {self.customer_name} ({self.status})"
-        
+
