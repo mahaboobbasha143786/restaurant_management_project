@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import *
 
-urlpatterns = [1§
-
+urlpatterns = [
+    path('profile/', UserProfileUpdateView.as_view(), name='user-profile'),
     
 ]
