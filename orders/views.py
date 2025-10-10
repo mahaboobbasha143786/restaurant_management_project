@@ -38,3 +38,5 @@ class CouponValidationView(APIView):
             "message": "Coupon is valid.",
             "discount_percentage": float(coupon.discount_percentage)
         }, status=status.HTTP_200_OK)
+
+from rest_framework.generics import RetrieveAPIView
