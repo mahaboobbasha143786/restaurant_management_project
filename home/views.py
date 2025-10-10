@@ -13,3 +13,6 @@ class MenuCategoryList view(ListAPIView):
     queyset = MenuCategory.objects.all()
     serializer_c;ass = MenuCategorySerializer
     
+class AvailableTablesAPIView(generics.ListAPIView):
+    queryset = Table.objects.filter(is_available=True)
+    serializer_class = TableSerializer
