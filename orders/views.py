@@ -40,3 +40,7 @@ class CouponValidationView(APIView):
         }, status=status.HTTP_200_OK)
 
 from rest_framework.generics import RetrieveAPIView
+class OrderDetailView(RetrieveAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    lookup_field = 'id'
